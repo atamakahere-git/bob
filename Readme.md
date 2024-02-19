@@ -185,7 +185,7 @@ Found 6 outliers among 100 measurements (6.00%)
 
 Based on the provided benchmark results, we can draw several conclusions regarding the performance of different builder patterns. The titles in the results indicate the configuration used for each benchmark:
 
-Here are the key conclusions:
+Here are the key inferences:
 
 #### 1. Random Data vs. Definite Data:
 
