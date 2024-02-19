@@ -183,7 +183,7 @@ Found 6 outliers among 100 measurements (6.00%)
 
 ## Inference
 
-Based on the provided benchmark results, we can draw several conclusions regarding the performance of different builder patterns. The titles in the results indicate the configuration used for each benchmark:
+Based on the provided benchmark results, we can draw several conclusions regarding the performance of different builder patterns.
 
 Here are the key inferences:
 
