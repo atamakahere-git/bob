@@ -77,7 +77,7 @@ struct StructBuilder {
 }
 
 impl StructBuilder {
-    pub fn name(&mut self, name: &str) -> Self {
+    pub fn name(self, name: &str) -> Self {
         Self {
             name: Some(name.to_owned()),
             ..self
@@ -99,7 +99,7 @@ struct StructBuilder<'a> {
 }
 
 impl<'a> StructBuilder<'a> {
-    pub fn name(&mut self, name: &str) -> Self {
+    pub fn name(self, name: &'a str) -> Self {
         Self {
             name: Some(name),
             ..self
