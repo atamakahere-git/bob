@@ -1,4 +1,4 @@
-use crate::Cat;
+use crate::{rand_str_gen, Cat, RandomBuilder};
 
 /// It's not easy to generate cats out of thin air, hence it can fail.
 #[derive(Debug, thiserror::Error)]
@@ -63,6 +63,19 @@ impl CatMutRefBuilderOwnedTypes {
     }
 }
 
+impl RandomBuilder for CatMutRefBuilderOwnedTypes {
+    fn random_build() -> Cat {
+        Self::new()
+            .name(&rand_str_gen(10))
+            .number(rand::random())
+            .friend(&rand_str_gen(10))
+            .friend(&rand_str_gen(10))
+            .friend(&rand_str_gen(10))
+            .build()
+            .expect("Unabel to build")
+    }
+}
+
 #[derive(Debug, Default)]
 pub struct CatMutRefBuilderBorrowTypes<'build> {
     name: Option<&'build str>,
@@ -110,5 +123,18 @@ impl<'build> CatMutRefBuilderBorrowTypes<'build> {
             number: self.number,
             friends: self.friends.iter().map(ToString::to_string).collect(),
         })
+    }
+}
+
+impl RandomBuilder for CatMutRefBuilderBorrowTypes<'_> {
+    fn random_build() -> Cat {
+        Self::new()
+            .name(&rand_str_gen(10))
+            .number(rand::random())
+            .friend(&rand_str_gen(10))
+            .friend(&rand_str_gen(10))
+            .friend(&rand_str_gen(10))
+            .build()
+            .expect("Unabel to build")
     }
 }

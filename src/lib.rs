@@ -1,3 +1,5 @@
+use rand::distributions::DistString;
+
 use crate::{
     mutref::{CatMutRefBuilderBorrowTypes, CatMutRefBuilderOwnedTypes},
     owned::{CatOwnedBuilderBorrowTypes, CatOwnedBuilderOwnedTypes},
@@ -5,6 +7,10 @@ use crate::{
 
 mod mutref;
 mod owned;
+
+pub(crate) fn rand_str_gen(len: usize) -> String {
+    rand::distributions::Alphanumeric.sample_string(&mut rand::thread_rng(), len)
+}
 
 /// A cat in my cat collection
 #[derive(Debug)]
@@ -18,6 +24,10 @@ pub struct Cat {
     number: Option<i64>,
     /// Cats have friends, like us. They keep their username with them
     friends: Vec<String>,
+}
+
+trait RandomBuilder {
+    fn random_build() -> Cat;
 }
 
 #[test]

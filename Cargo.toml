@@ -7,4 +7,9 @@ edition = "2021"
 
 [dependencies]
 criterion = "0.5.1"
+rand = "0.8.5"
 thiserror = "1.0.56"
+
+[[bench]]
+name = "bob"
+harness = false
