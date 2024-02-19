@@ -181,4 +181,28 @@ Found 6 outliers among 100 measurements (6.00%)
   3 (3.00%) high severe
 ```
 
+## Inference
+
+Based on the provided benchmark results, we can draw several conclusions regarding the performance of different builder patterns. The titles in the results indicate the configuration used for each benchmark:
+
+Here are the key conclusions:
+
+#### 1. Random Data vs. Definite Data:
+
+Builders with definite (predetermined) data consistently showed lower execution times compared to those with random data. This suggests that constructing structs with predetermined data is generally more efficient than generating random data dynamically.
+
+#### 2. Mutable Reference vs. Owned Type Propagation:
+
+Builders propagated using owned types tended to have slightly better performance compared to those using mutable references, regardless of whether the builder struct contained borrowed or owned types. This implies that owned type propagation may offer slightly better performance and cleaner code.
+
+#### 3. Borrowed Types Consideration:
+
+The difference in performance between builder patterns containing borrowed types and those containing owned types was not significant. While builders with borrowed types may have slightly higher execution times, the impact on performance may be acceptable depending on the specific requirements of the application.
+
+#### 4. Outliers:
+
+The presence of outliers, especially high mild outliers, suggests some variability in the benchmark measurements. While most measurements are consistent, outliers may indicate occasional deviations from the norm.
+
 ## Conclusion
+
+#### Using Owned type propogation and Owned type in Builder is suggested as per the benchmark
