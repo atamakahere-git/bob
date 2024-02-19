@@ -8,6 +8,7 @@ use crate::{
 pub mod mutref;
 pub mod owned;
 
+/// Generate random string of given length
 pub(crate) fn rand_str_gen(len: usize) -> String {
     rand::distributions::Alphanumeric.sample_string(&mut rand::thread_rng(), len)
 }
@@ -17,23 +18,26 @@ pub(crate) fn rand_str_gen(len: usize) -> String {
 pub struct Cat {
     /// Cat name, can be same fore two
     name: String,
-    /// Cat username, they are modern and live in internet era of cats. These are unique
+    /// Cat username, they are modern and live in internet. These are unique
     username: String,
-    /// A number assigned to cat for easy reference, new kittens are not assigned yet so it can be
-    /// None
+    /// A number assigned to cat for easy reference,
+    /// new kittens are not assigned yet so it can be None
     number: Option<i64>,
     /// Cats have friends, like us. They keep their username with them
     friends: Vec<String>,
 }
 
+/// Build [Cat] with random data
 pub trait RandomBuilder {
     fn random_build() -> Cat;
 }
 
+/// Build [Cat] with predetermined data
 pub trait DefaultBuilder {
     fn default_build() -> Cat;
 }
 
+/// Implement [RandomBuilder] on a struct
 macro_rules! impl_random_builder {
     ($($struct_name:ident $(<$($lifetime:tt),*>)?),*) => {
         $(impl RandomBuilder for $struct_name $(<$($lifetime),*>)? {
@@ -52,6 +56,7 @@ macro_rules! impl_random_builder {
     };
 }
 
+/// Implement [DefaultBuilder] on a struct
 macro_rules! impl_default_builder {
     ($($struct_name:ident $(<$($lifetime:tt),*>)?),*) => {
         $(impl DefaultBuilder for $struct_name $(<$($lifetime),*>)? {

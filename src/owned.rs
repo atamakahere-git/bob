@@ -1,4 +1,4 @@
-use crate::{Cat};
+use crate::Cat;
 
 /// It's not easy to generate cats out of thin air, hence it can fail.
 #[derive(Debug, thiserror::Error)]
@@ -7,7 +7,7 @@ pub enum CatBuildError {
     Generic,
 }
 
-// Builder pattern for cat creation using mutable reference
+/// Build [Cat] using Owned types and propogates using Owned type
 #[derive(Debug, Default)]
 pub struct CatOwnedBuilderOwnedTypes {
     name: Option<String>,
@@ -69,6 +69,7 @@ impl CatOwnedBuilderOwnedTypes {
     }
 }
 
+/// Build [Cat] using borrowed types and propogates using Owned type
 #[derive(Debug, Default)]
 pub struct CatOwnedBuilderBorrowTypes<'build> {
     name: Option<&'build str>,
