@@ -13,9 +13,9 @@ It provides a fluent API for setting values of these fields and eventually const
 For all the example in this topic, consider this struct
 
 ```rust
-   struct Struct {
-       name: String,
-   }
+struct Struct {
+   name: String,
+}
 ```
 
 ### 1. StructBuilder with Owned Types (Mutable Reference)
