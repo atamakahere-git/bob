@@ -1,4 +1,4 @@
-use crate::{rand_str_gen, Cat, RandomBuilder};
+use crate::{Cat};
 
 /// It's not easy to generate cats out of thin air, hence it can fail.
 #[derive(Debug, thiserror::Error)]
@@ -45,7 +45,7 @@ impl CatMutRefBuilderOwnedTypes {
 
     pub fn friends(&mut self, friends: &[&str]) -> &mut Self {
         self.friends
-            .extend(friends.into_iter().map(|str| str.to_string()));
+            .extend(friends.iter().map(|str| str.to_string()));
         self
     }
 
@@ -60,19 +60,6 @@ impl CatMutRefBuilderOwnedTypes {
             number: self.number,
             friends: self.friends.clone(),
         })
-    }
-}
-
-impl RandomBuilder for CatMutRefBuilderOwnedTypes {
-    fn random_build() -> Cat {
-        Self::new()
-            .name(&rand_str_gen(10))
-            .number(rand::random())
-            .friend(&rand_str_gen(10))
-            .friend(&rand_str_gen(10))
-            .friend(&rand_str_gen(10))
-            .build()
-            .expect("Unabel to build")
     }
 }
 
@@ -107,7 +94,7 @@ impl<'build> CatMutRefBuilderBorrowTypes<'build> {
     }
 
     pub fn friend(&mut self, friend: &'build str) -> &mut Self {
-        self.friends.push(friend.into());
+        self.friends.push(friend);
         self
     }
 
@@ -123,18 +110,5 @@ impl<'build> CatMutRefBuilderBorrowTypes<'build> {
             number: self.number,
             friends: self.friends.iter().map(ToString::to_string).collect(),
         })
-    }
-}
-
-impl RandomBuilder for CatMutRefBuilderBorrowTypes<'_> {
-    fn random_build() -> Cat {
-        Self::new()
-            .name(&rand_str_gen(10))
-            .number(rand::random())
-            .friend(&rand_str_gen(10))
-            .friend(&rand_str_gen(10))
-            .friend(&rand_str_gen(10))
-            .build()
-            .expect("Unabel to build")
     }
 }

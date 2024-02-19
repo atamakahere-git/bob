@@ -5,8 +5,8 @@ use crate::{
     owned::{CatOwnedBuilderBorrowTypes, CatOwnedBuilderOwnedTypes},
 };
 
-mod mutref;
-mod owned;
+pub mod mutref;
+pub mod owned;
 
 pub(crate) fn rand_str_gen(len: usize) -> String {
     rand::distributions::Alphanumeric.sample_string(&mut rand::thread_rng(), len)
@@ -26,54 +26,60 @@ pub struct Cat {
     friends: Vec<String>,
 }
 
-trait RandomBuilder {
+pub trait RandomBuilder {
     fn random_build() -> Cat;
 }
 
-#[test]
-fn test() {
-    let cat1 = CatMutRefBuilderOwnedTypes::new()
-        .name("good kittie")
-        .username("kiten1024")
-        .number(12)
-        .friend("goodkitten12")
-        .friend("goodkitten13")
-        .friend("goodkitten14")
-        .friends(&["kitten1", "kitten1", "kitten1", "kitten1", "kitten1"])
-        .build();
-
-    let cat2 = CatMutRefBuilderBorrowTypes::new()
-        .name("good kittie")
-        .username("kiten1024")
-        .number(12)
-        .friend("goodkitten12")
-        .friend("goodkitten13")
-        .friend("goodkitten14")
-        .friends(&["kitten1", "kitten1", "kitten1", "kitten1", "kitten1"])
-        .build();
-
-    let cat3 = CatOwnedBuilderOwnedTypes::new()
-        .name("good kittie")
-        .username("kiten1024")
-        .number(12)
-        .friend("goodkitten12")
-        .friend("goodkitten13")
-        .friend("goodkitten14")
-        .friends(&["kitten1", "kitten1", "kitten1", "kitten1", "kitten1"])
-        .build();
-
-    let cat4 = CatOwnedBuilderBorrowTypes::new()
-        .name("good kittie")
-        .username("kiten1024")
-        .number(12)
-        .friend("goodkitten12")
-        .friend("goodkitten13")
-        .friend("goodkitten14")
-        .friends(&["kitten1", "kitten1", "kitten1", "kitten1", "kitten1"])
-        .build();
-
-    dbg!(cat1);
-    dbg!(cat2);
-    dbg!(cat3);
-    dbg!(cat4);
+pub trait DefaultBuilder {
+    fn default_build() -> Cat;
 }
+
+macro_rules! impl_random_builder {
+    ($($struct_name:ident $(<$($lifetime:tt),*>)?),*) => {
+        $(impl RandomBuilder for $struct_name $(<$($lifetime),*>)? {
+            fn random_build() -> Cat {
+                Self::new()
+                    .name(&rand_str_gen(10))
+                    .username(&rand_str_gen(10))
+                    .number(rand::random())
+                    .friend(&rand_str_gen(10))
+                    .friend(&rand_str_gen(10))
+                    .friend(&rand_str_gen(10))
+                    .build()
+                    .expect("Unable to build")
+            }
+        })*
+    };
+}
+
+macro_rules! impl_default_builder {
+    ($($struct_name:ident $(<$($lifetime:tt),*>)?),*) => {
+        $(impl DefaultBuilder for $struct_name $(<$($lifetime),*>)? {
+            fn default_build() -> Cat {
+                Self::new()
+                    .name("goodkitten")
+                    .username("goodkitten")
+                    .number(123)
+                    .friend("goodkitten1")
+                    .friend("goodkitten2")
+                    .friend("goodkitten3")
+                    .build()
+                    .expect("Unable to build")
+            }
+        })*
+    };
+}
+
+impl_random_builder!(
+    CatOwnedBuilderOwnedTypes,
+    CatMutRefBuilderOwnedTypes,
+    CatMutRefBuilderBorrowTypes<'_>,
+    CatOwnedBuilderBorrowTypes<'_>
+);
+
+impl_default_builder!(
+    CatOwnedBuilderOwnedTypes,
+    CatMutRefBuilderOwnedTypes,
+    CatMutRefBuilderBorrowTypes<'_>,
+    CatOwnedBuilderBorrowTypes<'_>
+);
