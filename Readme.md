@@ -114,7 +114,21 @@ impl<'a> StructBuilder<'a> {
 
 Benchmarks are important, specially when performance is critical to decide which builder pattern to use
 
-My intuitive thought were that `2. StructBuilder with Borrowed Types (Mutable Reference)` would be most performant. But to my surprise
+My intuitive thought were that `2. StructBuilder with Borrowed Types (Mutable Reference)` would be most performant. But to my surprise it was not.
+
+For benchmarking, All 4 types of builder is implemented on the following struct
+
+```rust
+#[derive(Debug)]
+pub struct Cat {
+    name: String,
+    username: String,
+    number: Option<i64>,
+    friends: Vec<String>,
+}
+```
+
+You can run the benchmarks yourself on this repo with `cargo bench`
 
 ### Types of Benchmarks performed
 
