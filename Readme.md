@@ -39,7 +39,7 @@ impl StructBuilder {
             name: self.name.unwrap_or_default(),
         }
     }
- }
+}
 ```
 
 ### 2. StructBuilder with Borrowed Types (Mutable Reference)
@@ -63,7 +63,7 @@ impl<'a> StructBuilder<'a> {
             name: self.name.unwrap_or_default().into(),
         }
     }
- }
+}
 ```
 
 ### 3. StructBuilder with Owned Types (Owned Type)
