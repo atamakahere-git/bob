@@ -130,6 +130,14 @@ This benchmark provides insights into the overhead introduced by the builder pat
 
 ### Results
 
+Reading the titles in results:
+
+Title format: `rand|def, mutref|owned, brw|owned`
+
+1. `rand|def`: `rand` means random data was generated and supplied, `def` means definite (predetermined) data was provided
+2. `mutref|owned`: `muref` means builder was propogated using mutable reference, `owned` means builder was propogated via owned type
+3. `brw|owned`: `brw` means the builder struct contains borrowed types, `owned` means builder struct contains owned types
+
 ```shell
 
 randmutrefowned         time:   [449.74 ns 453.26 ns 456.70 ns]
@@ -172,3 +180,5 @@ Found 6 outliers among 100 measurements (6.00%)
   3 (3.00%) high mild
   3 (3.00%) high severe
 ```
+
+## Conclusion
